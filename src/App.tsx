@@ -4,9 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { GlobalStyles } from "../constants/styles";
-import AllExpenses from "./screens/all_expenses";
-import ManageExpense from "./screens/manage_expense";
-import RecentExpenses from "./screens/recent_expenses";
+import AllExpenses from "./screens/AllExpenses";
+import ManageExpense from "./screens/ManageExpenses";
+import RecentExpenses from "./screens/RecentExpenses";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
