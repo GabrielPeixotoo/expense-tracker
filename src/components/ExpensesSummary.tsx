@@ -27,6 +27,7 @@ export default function ExpensesSummary({
 const styles = StyleSheet.create({
   container: {
     padding: 8,
+    marginTop: 16,
     backgroundColor: GlobalStyles.colors.primary50,
     borderRadius: 6,
     flexDirection: "row",
