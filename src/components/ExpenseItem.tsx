@@ -5,11 +5,15 @@ import { GlobalStyles } from "../../constants/styles";
 
 type ExpenseItemProps = {
   expense: Expense;
+  onPress: () => void;
 };
 
-export default function ExpenseItem({ expense }: ExpenseItemProps) {
+export default function ExpenseItem({ expense, onPress }: ExpenseItemProps) {
   return (
-    <Pressable>
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => pressed && styles.pressed}
+    >
       <View style={styles.expenseItem}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
@@ -26,6 +30,9 @@ export default function ExpenseItem({ expense }: ExpenseItemProps) {
 }
 
 const styles = StyleSheet.create({
+  pressed: {
+    opacity: 0.75,
+  },
   expenseItem: {
     padding: 12,
     marginVertical: 8,

@@ -4,12 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { GlobalStyles } from "../constants/styles";
+import IconButton from "./components/buttons/IconButton";
 import AllExpenses from "./screens/AllExpenses";
 import ManageExpense from "./screens/ManageExpenses";
 import RecentExpenses from "./screens/RecentExpenses";
+import { BottomTabsParamList, RootStackParamList } from "./types/routes";
 
-const Stack = createNativeStackNavigator();
-const BottomTabs = createBottomTabNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const BottomTabs = createBottomTabNavigator<BottomTabsParamList>();
 
 function ExpensesOverview() {
   return (
@@ -19,6 +21,14 @@ function ExpensesOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({ tintColor }) => (
+          <IconButton
+            icon="add"
+            size={24}
+            color={tintColor}
+            onPress={() => {}}
+          />
+        ),
       }}
     >
       <BottomTabs.Screen
@@ -54,7 +64,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="ExpensesOverview"
+            name="ExpenseOverview"
             component={ExpensesOverview}
             options={{ headerShown: false }}
           />
