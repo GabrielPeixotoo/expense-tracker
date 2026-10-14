@@ -1,6 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { GlobalStyles } from "../constants/styles";
@@ -13,6 +13,23 @@ import { BottomTabsParamList, RootStackParamList } from "./types/routes";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const BottomTabs = createBottomTabNavigator<BottomTabsParamList>();
 
+function AddExpenseHeaderButton({ tintColor }: { tintColor?: string }) {
+  const navigation = useNavigation();
+
+  function goToManageExpense() {
+    navigation.navigate("ManageExpense");
+  }
+
+  return (
+    <IconButton
+      icon="add"
+      size={24}
+      color={tintColor}
+      onPress={goToManageExpense}
+    />
+  );
+}
+
 function ExpensesOverview() {
   return (
     <BottomTabs.Navigator
@@ -22,12 +39,7 @@ function ExpensesOverview() {
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         headerRight: ({ tintColor }) => (
-          <IconButton
-            icon="add"
-            size={24}
-            color={tintColor}
-            onPress={() => {}}
-          />
+          <AddExpenseHeaderButton tintColor={tintColor} />
         ),
       }}
     >

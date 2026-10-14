@@ -1,6 +1,8 @@
+import { NavigatorScreenParams } from "@react-navigation/native";
+
 export type RootStackParamList = {
-    ExpenseOverview: undefined;
-    ManageExpense: undefined;
+    ExpenseOverview: NavigatorScreenParams<BottomTabsParamList>;
+    ManageExpense: { expenseId: string } | undefined;
 }
 
 export type BottomTabsParamList = {
