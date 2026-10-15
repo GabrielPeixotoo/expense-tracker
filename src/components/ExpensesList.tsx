@@ -10,15 +10,20 @@ type ExpensesListProps = {
 export default function ExpensesList({ expenses }: ExpensesListProps) {
   const navigation = useNavigation();
 
-  function goToManageExpense() {
-    navigation.navigate("ManageExpense");
+  function goToManageExpense(id: string) {
+    navigation.navigate("ManageExpense", {
+      expenseId: id,
+    });
   }
 
   return (
     <FlatList
       data={expenses}
       renderItem={({ item }) => (
-        <ExpenseItem expense={item} onPress={goToManageExpense} />
+        <ExpenseItem
+          expense={item}
+          onPress={() => goToManageExpense(item.id)}
+        />
       )}
       keyExtractor={(item) => item.id}
     />
