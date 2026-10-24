@@ -1,6 +1,17 @@
 import ExpensesOutput from "@/components/ExpensesOutput";
-import { DUMMY_EXPENSES } from "@/data/dummy-expenses";
+import { ExpensesContext } from "@/store/expenses-context";
+import { getDateMinusDays } from "@/utils/date";
+import { useContext } from "react";
 
 export default function RecentExpenses() {
-  return <ExpensesOutput expenses={DUMMY_EXPENSES} period={"Last 7 Days"} />;
+  const expensesCtx = useContext(ExpensesContext);
+
+  const recentExpenses = expensesCtx.expenses.filter((expense) => {
+    const today = new Date();
+
+    const date7DaysAgo = getDateMinusDays(today, 7);
+
+    return expense.date > date7DaysAgo;
+  });
+  return <ExpensesOutput expenses={recentExpenses} period={"Last 7 Days"} />;
 }
