@@ -80,6 +80,7 @@ export default function App() {
             screenOptions={{
               headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
               headerTintColor: "white",
+              contentStyle: { backgroundColor: GlobalStyles.colors.primary500 },
             }}
           >
             <Stack.Screen
@@ -91,7 +92,8 @@ export default function App() {
               name="ManageExpense"
               component={ManageExpense}
               options={{
-                presentation: "modal",
+                presentation: "transparentModal",
+                animation: "fade_from_bottom",
               }}
             />
           </Stack.Navigator>
