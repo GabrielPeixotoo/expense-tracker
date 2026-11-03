@@ -1,5 +1,5 @@
 import { Expense } from "@/types/Expense";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import ExpensesList from "./ExpensesList";
 import ExpensesSummary from "./ExpensesSummary";
@@ -13,10 +13,14 @@ export default function ExpensesOutput({
   expenses,
   period,
 }: ExpensesOutputProps) {
-  return (
+  return expenses.length > 0 ? (
     <View style={styles.container}>
       <ExpensesSummary expenses={expenses} period={period} />
       <ExpensesList expenses={expenses} />
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <Text style={styles.emptyText}>No registered expenses found!</Text>
     </View>
   );
 }
@@ -26,5 +30,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     backgroundColor: GlobalStyles.colors.primary700,
+  },
+  emptyText: {
+    textAlign: "center",
+    color: "white",
+    margin: 32,
   },
 });

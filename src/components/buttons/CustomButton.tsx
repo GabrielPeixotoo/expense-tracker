@@ -17,7 +17,7 @@ type ButtonProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-export default function Button({
+export default function CustomButton({
   children,
   onPress,
   mode = "filled",
