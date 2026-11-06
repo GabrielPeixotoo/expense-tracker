@@ -1,6 +1,7 @@
 import IconButton from "@/components/buttons/IconButton";
 import ExpenseForm from "@/components/form/ExpenseForm";
 import { ExpensesContext } from "@/store/expenses-context";
+import { Expense } from "@/types/Expense";
 import { useNavigation } from "@react-navigation/native";
 import { useContext, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
@@ -18,6 +19,10 @@ export default function ManageExpense() {
 
   const expenseCtx = useContext(ExpensesContext);
 
+  const selectedExpense = expenseCtx.expenses.find(
+    (expense) => expense.id === expenseId,
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add Expense",
@@ -31,21 +36,11 @@ export default function ManageExpense() {
   function cancelHandler() {
     navigation.goBack();
   }
-  function confirmHandler() {
+  function confirmHandler(expense: Omit<Expense, "id">) {
     if (isEditing) {
-      expenseCtx.updateExpense("", {
-        id: "",
-        date: new Date(),
-        description: "",
-        amount: 1,
-      });
+      expenseCtx.updateExpense(expenseId, expense);
     } else {
-      expenseCtx.addExpense({
-        id: "",
-        date: new Date(),
-        description: "",
-        amount: 1,
-      });
+      expenseCtx.addExpense(expense);
     }
     navigation.goBack();
   }
@@ -55,6 +50,8 @@ export default function ManageExpense() {
       <ExpenseForm
         submitButtonLabel={isEditing ? "Update" : "Add"}
         onCancel={cancelHandler}
+        onSubmit={(expense) => confirmHandler(expense)}
+        initialExpense={selectedExpense}
       />
 
       {isEditing && (

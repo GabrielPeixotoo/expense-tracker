@@ -5,14 +5,14 @@ import { createContext, ReactNode, useReducer } from "react";
 
 type ExpensesContextType = {
   expenses: Expense[];
-  addExpense: (expense: Expense) => void;
-  updateExpense: (id: string, expense: Expense) => void;
+  addExpense: (expense: Omit<Expense, "id">) => void;
+  updateExpense: (id: string, expense: Omit<Expense, "id">) => void;
   deleteExpense: (id: string) => void;
 };
 
 type ExpensesAction =
   | { type: "ADD"; payload: Expense }
-  | { type: "UPDATE"; payload: { id: string; expense: Expense } }
+  | { type: "UPDATE"; payload: { id: string; expense: Omit<Expense, "id"> } }
   | { type: "DELETE"; payload: string };
 
 export const ExpensesContext = createContext<ExpensesContextType>({
@@ -62,7 +62,7 @@ export default function ExpensesContextProvider({
     });
   }
 
-  function updateExpense(id: string, expense: Expense) {
+  function updateExpense(id: string, expense: Omit<Expense, "id">) {
     dispatch({
       type: "UPDATE",
       payload: {
