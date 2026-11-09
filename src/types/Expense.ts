@@ -4,3 +4,5 @@ export type Expense = {
     description: string
     amount: number;
 }
+
+export type ExpenseInputDto = Omit<Expense, "id">

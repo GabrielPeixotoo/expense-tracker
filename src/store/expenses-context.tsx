@@ -1,18 +1,18 @@
 import { DUMMY_EXPENSES } from "@/data/dummy-expenses";
-import { Expense } from "@/types/Expense";
-import * as Crypto from "expo-crypto";
+import { expenseSerice } from "@/services/expenseService";
+import { Expense, ExpenseInputDto } from "@/types/Expense";
 import { createContext, ReactNode, useReducer } from "react";
 
 type ExpensesContextType = {
   expenses: Expense[];
-  addExpense: (expense: Omit<Expense, "id">) => void;
-  updateExpense: (id: string, expense: Omit<Expense, "id">) => void;
+  addExpense: (expense: ExpenseInputDto) => void;
+  updateExpense: (id: string, expense: ExpenseInputDto) => void;
   deleteExpense: (id: string) => void;
 };
 
 type ExpensesAction =
   | { type: "ADD"; payload: Expense }
-  | { type: "UPDATE"; payload: { id: string; expense: Omit<Expense, "id"> } }
+  | { type: "UPDATE"; payload: { id: string; expense: ExpenseInputDto } }
   | { type: "DELETE"; payload: string };
 
 export const ExpensesContext = createContext<ExpensesContextType>({
@@ -48,11 +48,11 @@ export default function ExpensesContextProvider({
 }) {
   const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES);
 
-  function addExpense(expense: Omit<Expense, "id">) {
-    const newId = Crypto.randomUUID();
+  async function addExpense(expense: ExpenseInputDto) {
+    const firebaseId = await expenseSerice.add(expense);
 
     const newExpense: Expense = {
-      id: newId,
+      id: firebaseId,
       ...expense,
     };
 
@@ -62,7 +62,7 @@ export default function ExpensesContextProvider({
     });
   }
 
-  function updateExpense(id: string, expense: Omit<Expense, "id">) {
+  function updateExpense(id: string, expense: ExpenseInputDto) {
     dispatch({
       type: "UPDATE",
       payload: {

@@ -87,7 +87,6 @@ export default function ExpenseForm({
     !inputValues.date.isValid ||
     !inputValues.description.isValid;
 
-  console.log(formIsInvalid);
   return (
     <View style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
