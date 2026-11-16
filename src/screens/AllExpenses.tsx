@@ -3,6 +3,11 @@ import { ExpensesContext } from "@/store/expenses-context";
 import { useContext } from "react";
 
 export default function AllExpenses() {
-  const expensesCtx = useContext(ExpensesContext);
-  return <ExpensesOutput expenses={expensesCtx.expenses} period={"Total"} />;
+  const { expenses } = useContext(ExpensesContext);
+
+  const sorted = [...expenses].sort(
+    (a, b) => b.date.getTime() - a.date.getTime(),
+  );
+
+  return <ExpensesOutput expenses={sorted} period={"Total"} />;
 }

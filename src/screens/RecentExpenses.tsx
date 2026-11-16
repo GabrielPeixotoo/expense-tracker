@@ -13,5 +13,9 @@ export default function RecentExpenses() {
 
     return expense.date > date7DaysAgo;
   });
-  return <ExpensesOutput expenses={recentExpenses} period={"Last 7 Days"} />;
+
+  const sorted = recentExpenses.sort(
+    (a, b) => b.date.getTime() - a.date.getTime(),
+  );
+  return <ExpensesOutput expenses={sorted} period={"Last 7 Days"} />;
 }

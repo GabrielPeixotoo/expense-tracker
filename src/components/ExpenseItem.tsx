@@ -17,7 +17,7 @@ export default function ExpenseItem({ expense, onPress }: ExpenseItemProps) {
       <View style={styles.expenseItem}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
-            {expense.description}
+            {expense.description.trim()}
           </Text>
           <Text style={styles.textBase}>{getFormattedDate(expense.date)}</Text>
         </View>

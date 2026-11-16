@@ -56,7 +56,7 @@ export default function ExpenseForm({
     const expenseData = {
       amount: +inputValues.amount.value,
       date: new Date(inputValues.date.value),
-      description: inputValues.description.value,
+      description: inputValues.description.value.trim(),
     };
 
     const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
