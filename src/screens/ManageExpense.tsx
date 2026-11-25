@@ -1,4 +1,5 @@
 import IconButton from "@/components/buttons/IconButton";
+import ErrorOverlay from "@/components/ErrorOverlay";
 import ExpenseForm from "@/components/form/ExpenseForm";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import { ExpensesContext } from "@/store/expenses-context";
@@ -44,6 +45,15 @@ export default function ManageExpense() {
       await expenseCtx.addExpense(expense);
     }
     navigation.goBack();
+  }
+
+  if (expenseCtx.error) {
+    return (
+      <ErrorOverlay
+        message={expenseCtx.error}
+        onConfirm={expenseCtx.clearError}
+      />
+    );
   }
 
   return (
