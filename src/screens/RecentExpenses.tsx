@@ -1,12 +1,23 @@
+import ErrorOverlay from "@/components/ErrorOverlay";
 import ExpensesOutput from "@/components/ExpensesOutput";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { ExpensesContext } from "@/store/expenses-context";
 import { getDateMinusDays } from "@/utils/date";
 import { useContext } from "react";
 
 export default function RecentExpenses() {
-  const expensesCtx = useContext(ExpensesContext);
+  const { expenses, isLoading, error, clearError } =
+    useContext(ExpensesContext);
 
-  const recentExpenses = expensesCtx.expenses.filter((expense) => {
+  if (isLoading) {
+    return <LoadingOverlay />;
+  }
+
+  if (error) {
+    return <ErrorOverlay message={error} onConfirm={clearError} />;
+  }
+
+  const recentExpenses = expenses.filter((expense) => {
     const today = new Date();
 
     const date7DaysAgo = getDateMinusDays(today, 7);

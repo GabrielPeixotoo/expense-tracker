@@ -1,5 +1,6 @@
 import IconButton from "@/components/buttons/IconButton";
 import ExpenseForm from "@/components/form/ExpenseForm";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { ExpensesContext } from "@/store/expenses-context";
 import { Expense } from "@/types/Expense";
 import { useNavigation } from "@react-navigation/native";
@@ -29,18 +30,18 @@ export default function ManageExpense() {
     });
   }, [isEditing, navigation]);
 
-  function deleteExpenseHandler() {
-    expenseCtx.deleteExpense(expenseId);
+  async function deleteExpenseHandler() {
+    await expenseCtx.deleteExpense(expenseId);
     navigation.goBack();
   }
   function cancelHandler() {
     navigation.goBack();
   }
-  function confirmHandler(expense: Omit<Expense, "id">) {
+  async function confirmHandler(expense: Omit<Expense, "id">) {
     if (isEditing) {
-      expenseCtx.updateExpense(expenseId, expense);
+      await expenseCtx.updateExpense(expenseId, expense);
     } else {
-      expenseCtx.addExpense(expense);
+      await expenseCtx.addExpense(expense);
     }
     navigation.goBack();
   }
@@ -64,6 +65,11 @@ export default function ManageExpense() {
           />
         </View>
       )}
+      {expenseCtx.isLoading && (
+        <View style={styles.loadingOverlay}>
+          <LoadingOverlay />
+        </View>
+      )}
     </View>
   );
 }
@@ -73,6 +79,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800,
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFill,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   deleteContainer: {
